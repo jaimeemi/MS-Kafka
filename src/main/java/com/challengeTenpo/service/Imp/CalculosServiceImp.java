@@ -10,6 +10,7 @@ import com.challengeTenpo.models.Response.CalculoDinamicoResponse;
 import com.challengeTenpo.models.Response.HistorialCalculosResponse;
 import com.challengeTenpo.models.entities.HistorialCalculosEntity;
 import com.challengeTenpo.repository.ICalculosRepository;
+import com.challengeTenpo.repository.mappers.HistorialCalculosMapper;
 import com.challengeTenpo.service.ICalculosService;
 import com.challengeTenpo.service.FeignApi.IPorcentajeService;
 import com.challengeTenpo.service.Kafka.IKafkaService;
@@ -28,11 +29,11 @@ import java.util.List;
 @Slf4j
 public class CalculosServiceImp implements ICalculosService {
 
-
     private final IPorcentajeService porcentajeService;
     private final ICalculosRepository calculosRepository;
     private final RedisTemplate<String, Object> redisTemplate;
     private final IKafkaService kafkaService;
+    private final HistorialCalculosMapper mapper; // Inyectamos el mapper
 
     private static final String PORCENTAJE_CACHE = "Percentage";
     private static final String CACHE_NOMBRE = "percentageCache";
@@ -41,11 +42,13 @@ public class CalculosServiceImp implements ICalculosService {
     public CalculosServiceImp(IPorcentajeService porcentajeService,
                               ICalculosRepository calculosRepository,
                               RedisTemplate<String, Object> redisTemplate,
-                              IKafkaService kafkaService) {
+                              IKafkaService kafkaService,
+                              HistorialCalculosMapper mapper) { // Añadimos el mapper al constructor
         this.porcentajeService = porcentajeService;
         this.calculosRepository = calculosRepository;
         this.redisTemplate = redisTemplate;
         this.kafkaService = kafkaService;
+        this.mapper = mapper;
     }
 
     @Override
@@ -107,7 +110,8 @@ public class CalculosServiceImp implements ICalculosService {
 
         try {
             HistorialCalculosDTO persistencia = new HistorialCalculosDTO(request, resultado, url, mensajeError);
-            HistorialCalculosEntity persistenciaEntity = HistorialCalculosDTO.toEntity(persistencia);
+            // Usamos el mapper para la conversión
+            HistorialCalculosEntity persistenciaEntity = mapper.toEntity(persistencia);
             log.info("Persistiendo Calculo en Base de Datos en forma asincronica con kafka");
             kafkaService.send(persistenciaEntity);
         } catch (Exception e) {
@@ -124,7 +128,8 @@ public class CalculosServiceImp implements ICalculosService {
             throw new SinHistorialCalculosException();
         }
 
-        return HistorialCalculosResponse.fromEntities(entities);
+        // Usamos el mapper para la conversión
+        return mapper.toResponseList(entities);
     }
 
     @CacheEvict(value = CACHE_NOMBRE, allEntries = true)

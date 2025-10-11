@@ -1,7 +1,6 @@
 package com.challengeTenpo.models.DTO;
 
 import com.challengeTenpo.models.Request.CalculoDinamicoRequest;
-import com.challengeTenpo.models.entities.HistorialCalculosEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,7 +37,7 @@ public class HistorialCalculosDTO {
         this.parametros = createParamsString(request);
         this.respuesta = createResponseString(resultado);
         this.error = error != null && !error.isEmpty();
-        this.mensajeError = "";
+        this.mensajeError = error;
     }
 
     private static String createParamsString(CalculoDinamicoRequest request) {
@@ -47,20 +46,6 @@ public class HistorialCalculosDTO {
 
     private static String createResponseString(double resultado) {
         return String.format("{\"resultado\": %.2f}", resultado);
-    }
-
-    //Parseo o Mapeando de DTO a Entity
-    public static HistorialCalculosEntity toEntity(HistorialCalculosDTO dto) {
-        return HistorialCalculosEntity.builder()
-                .fecha(dto.getFecha() != null ? dto.getFecha() : LocalDateTime.now())
-                .endpoint(dto.getEndpoint())
-                .parametros(dto.getParametros() != null ? dto.getParametros() :
-                        String.format("numero1=%.2f&numero2=%.2f", dto.getNumero1(), dto.getNumero2()))
-                .respuesta(dto.getRespuesta() != null ? dto.getRespuesta() :
-                        String.format("{\"resultado\": %.2f}", dto.getResultado()))
-                .error(dto.getError() != null ? dto.getError() : false)
-                .mensajeError(dto.getMensajeError())
-                .build();
     }
 
 }

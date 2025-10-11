@@ -19,6 +19,11 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Configuración manual de Kafka. NOTA: Spring Boot puede auto-configurar la mayoría de estos beans
+ * basándose en las propiedades definidas en los archivos application.yml.
+ * Esta clase se mantiene con fines educativos para mostrar cómo se realizaría la configuración programáticamente.
+ */
 @Configuration
 @EnableKafka
 public class KafkaConfig {
@@ -29,6 +34,9 @@ public class KafkaConfig {
     @Value("${spring.kafka.topic.name:historial-calculations}")
     private String topicName;
 
+    /**
+     * Define la configuración para los productores de Kafka.
+     */
     @Bean
     public ProducerFactory<String, HistorialCalculosEntity> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
@@ -38,11 +46,17 @@ public class KafkaConfig {
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
+    /**
+     * Crea un KafkaTemplate para enviar mensajes, utilizando el ProducerFactory anterior.
+     */
     @Bean
     public KafkaTemplate<String, HistorialCalculosEntity> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 
+    /**
+     * Define la configuración para los consumidores de Kafka.
+     */
     @Bean
     public ConsumerFactory<String, HistorialCalculosEntity> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
@@ -51,10 +65,15 @@ public class KafkaConfig {
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+        // CORRECCIÓN DE SEGURIDAD: Se especifica el paquete de confianza para evitar vulnerabilidades.
+        // Usar "*" es inseguro ya que permite la deserialización de cualquier clase.
+        props.put(JsonDeserializer.TRUSTED_PACKAGES, "com.challengeTenpo.models.entities");
         return new DefaultKafkaConsumerFactory<>(props);
     }
 
+    /**
+     * Crea la fábrica de listeners para los consumidores, utilizando el ConsumerFactory anterior.
+     */
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, HistorialCalculosEntity> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, HistorialCalculosEntity> factory =
@@ -63,6 +82,9 @@ public class KafkaConfig {
         return factory;
     }
 
+    /**
+     * Define y crea un nuevo topic en el broker de Kafka si no existe.
+     */
     @Bean
     public NewTopic historialTopic() {
         return TopicBuilder.name(topicName)

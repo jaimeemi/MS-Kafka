@@ -18,7 +18,11 @@ public class KafkaConsumerImp {
         this.historialRepository = historialRepository;
     }
 
-    @KafkaListener(topics = "historial-calculations", groupId = "call-history-group")
+    @KafkaListener(
+            topics = "historial-calculations",
+            groupId = "call-history-group",
+            autoStartup = "${kafka.consumer.auto-startup:false}"
+    )
     public void consume(HistorialCalculosEntity historial) {
         log.info("Recepcion de mensaje: {} y Persistiendo con kafka consumer", historial);
         try {
