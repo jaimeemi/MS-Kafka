@@ -12,6 +12,9 @@ spring:
   jpa:
     open-in-view: false
 
+server:
+  port: 9000
+
 feign:
   client:
     config:

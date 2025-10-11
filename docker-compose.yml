@@ -3,7 +3,7 @@ version: '3.8'
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: postgres
+    container_name: MS-Kafka-postgres
     environment:
       POSTGRES_DB: historialCalculos_DB
       POSTGRES_USER: postgres
@@ -21,7 +21,7 @@ services:
 
   redis:
     image: redis:alpine
-    container_name: redis
+    container_name: MS-Kafka-redis
     ports:
       - "6379:6379"
     volumes:
@@ -29,7 +29,7 @@ services:
 
   zookeeper:
     image: bitnami/zookeeper:3.8
-    container_name: zookeeper
+    container_name: MS-Kafka-zookeeper
     ports:
       - "2181:2181"
     environment:
@@ -37,7 +37,7 @@ services:
 
   kafka:
     image: bitnami/kafka:3.5
-    container_name: kafka
+    container_name: MS-Kafka-kafka
     ports:
       - "9092:9092"
     environment:
@@ -51,7 +51,7 @@ services:
 
   app:
     build: .
-    container_name: ChallengeTenpo
+    container_name: MS-Kafka-ChallengeTenpo
     ports:
       - "8085:8085"
     depends_on:

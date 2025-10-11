@@ -1,15 +1,13 @@
 package com.challengeTenpo.configs;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 
-
 @Configuration
-@Profile("test")
+@Profile("local-kafka") // Corregido para ser más explícito al perfil de test con Kafka real
 public class KafkaTestContainerConfig {
 
     @Bean(initMethod = "start", destroyMethod = "stop")
