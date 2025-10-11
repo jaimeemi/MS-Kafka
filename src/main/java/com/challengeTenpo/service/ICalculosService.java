@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public interface ICalculosService {
 
-    CalculoDinamicoResponse CalculoDinamico (CalculoDinamicoRequest request, String url) throws CalculoDinamicoException, FeignApiException, BaseDatosException;
+    CalculoDinamicoResponse calculoDinamico(CalculoDinamicoRequest request, String url) throws CalculoDinamicoException, FeignApiException, BaseDatosException;
 
     List<HistorialCalculosResponse> historial();
 

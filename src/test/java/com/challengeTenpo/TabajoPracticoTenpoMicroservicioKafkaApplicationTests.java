@@ -5,8 +5,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(properties = "server.port=0")
-@ActiveProfiles("local-kafka") // Perfil unificado para usar Testcontainers
-public class TabajoPracticoTenpoMicroservicioKafkaApplicationTests {
+@ActiveProfiles("local-kafka")
+class TabajoPracticoTenpoMicroservicioKafkaApplicationTests {
 
 	@Test
 	void contextLoads() {

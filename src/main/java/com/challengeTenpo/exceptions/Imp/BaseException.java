@@ -8,14 +8,15 @@ public abstract class BaseException extends RuntimeException{
     private final String codigoError;
     private final String mensaje;
 
-    public BaseException(String mensaje, String codigoError) {
+    protected BaseException(String mensaje, String codigoError) {
         super(mensaje);
         this.mensaje = mensaje;
         this.codigoError = codigoError;
     }
 
-    public BaseException(String mensaje, Throwable cause, String codigoError) {
+    protected BaseException(String mensaje, Throwable cause, String codigoError) {
         this.mensaje = mensaje;
         this.codigoError = codigoError;
+        this.initCause(cause);
     }
 }

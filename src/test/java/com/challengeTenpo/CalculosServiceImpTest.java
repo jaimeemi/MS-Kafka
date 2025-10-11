@@ -53,7 +53,7 @@ class CalculosServiceImpTest {
         when(porcentajeService.obtenerPorcentaje()).thenReturn("0.5");
         when(valueOperations.get(anyString())).thenReturn(null);
 
-        var response = calculosService.CalculoDinamico(request, URL_EJEMPLO);
+        var response = calculosService.calculoDinamico(request, URL_EJEMPLO);
 
         assertEquals(200.0, response.getResultado());
         verify(kafkaService).send(any(HistorialCalculosEntity.class));
@@ -66,7 +66,7 @@ class CalculosServiceImpTest {
         when(valueOperations.get(CACHE_NOMBRE)).thenReturn(0.3);
 
         assertDoesNotThrow(() -> {
-            CalculoDinamicoResponse response = calculosService.CalculoDinamico(request, URL_EJEMPLO);
+            CalculoDinamicoResponse response = calculosService.calculoDinamico(request, URL_EJEMPLO);
 
             assertEquals(160.0, response.getResultado()); // 100 + (200 * 0.3)
             verify(kafkaService).send(any(HistorialCalculosEntity.class));
@@ -82,7 +82,7 @@ class CalculosServiceImpTest {
         when(valueOperations.get(anyString())).thenReturn(null);
 
         assertThrows(CalculoDinamicoException.class, () -> {
-            calculosService.CalculoDinamico(request, URL_EJEMPLO);
+            calculosService.calculoDinamico(request, URL_EJEMPLO);
         });
     }
 
@@ -93,7 +93,7 @@ class CalculosServiceImpTest {
         when(valueOperations.get(CACHE_NOMBRE)).thenReturn(null);
 
         assertThrows(FeignApiException.class, () -> {
-            calculosService.CalculoDinamico(request, URL_EJEMPLO);
+            calculosService.calculoDinamico(request, URL_EJEMPLO);
         });
     }
 }

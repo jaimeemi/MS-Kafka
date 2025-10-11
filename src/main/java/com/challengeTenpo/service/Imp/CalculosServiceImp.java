@@ -51,7 +51,7 @@ public class CalculosServiceImp implements ICalculosService {
     @Override
     @Transactional
     @Cacheable(value = CACHE_NOMBRE, unless = "#result == null")
-    public CalculoDinamicoResponse CalculoDinamico(CalculoDinamicoRequest request, String url) {
+    public CalculoDinamicoResponse calculoDinamico(CalculoDinamicoRequest request, String url) {
         CalculoDinamicoResponse response = new CalculoDinamicoResponse();
         double numeroAleatorioMiddelware = llamadaMiddelware();
         double resultado = realizarCalculo(request, numeroAleatorioMiddelware);
@@ -86,14 +86,13 @@ public class CalculosServiceImp implements ICalculosService {
                 throw new FeignApiException(e.getMessage() + " y no hay porcentaje en caché");
             }
 
-            // Esta parte del metodo se la pedi a IA, entiendo que castea! Pude haberlo puesto en otro metodo
             try {
                 if (cachedValue instanceof Double) {
                     return (Double) cachedValue;
-                } else if (cachedValue instanceof Integer) {
-                    return ((Integer) cachedValue).doubleValue();
-                } else if (cachedValue instanceof String) {
-                    return Double.parseDouble((String) cachedValue);
+                } else if (cachedValue instanceof Integer integer) {
+                    return integer.doubleValue();
+                } else if (cachedValue instanceof String string) {
+                    return Double.parseDouble(string);
                 } else {
                     throw new FeignApiException("Formato de porcentaje en caché no válido");
                 }
@@ -105,10 +104,7 @@ public class CalculosServiceImp implements ICalculosService {
 
     private void persistirOperacion(CalculoDinamicoRequest request, double resultado,
                                     String url, String mensajeError) {
-        /*
-        * Otra forma es usar Optional<HistorialCalculosDTO>
-        * Optional<HistorialCalculosDTO> persistencia = Optional.of(persistencia);
-        */
+
         try {
             HistorialCalculosDTO persistencia = new HistorialCalculosDTO(request, resultado, url, mensajeError);
             HistorialCalculosEntity persistenciaEntity = HistorialCalculosDTO.toEntity(persistencia);

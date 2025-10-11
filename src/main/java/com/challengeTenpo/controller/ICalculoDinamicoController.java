@@ -28,16 +28,6 @@ public interface ICalculoDinamicoController {
             @Valid @RequestHeader double numero1,
             @Valid @RequestHeader double numero2);
 
-    /*
-    * Aqui dejo otro modelo de implementacion Usando @PathVariable
-    * Donde la inserccion de los parametros va en la URI.
-
-    @GetMapping("/calcular")
-    ResponseEntity<CalculoDinamicoResponse> calcular(
-            @Valid @PathVariable double monto,
-            @Valid @PathVariable double porcentaje);
-    * */
-
     @Operation(summary = "Lista Historial de calculos", description = "Retorna una lista de todos los calculos")
     @ApiResponse(responseCode = "200", description = "Historicos")
     @ApiResponse(responseCode = "404", description = "No se encontro el historial")

@@ -23,7 +23,6 @@ public class KafkaServiceImp implements IKafkaService {
     private boolean kafkaEnabled;
 
     private static final String TOPIC = "historial-calculations";
-    private static final String TOPIC_HISTORIAL = "historial-calculations";
 
     private final KafkaTemplate<String, HistorialCalculosEntity> kafkaTemplate;
     private final ICalculosRepository historialRepository;

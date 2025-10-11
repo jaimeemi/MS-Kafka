@@ -23,7 +23,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public class CalculoDinamicoControllerImplTest {
+class CalculoDinamicoControllerImplTest {
 
     @InjectMocks
     private CalculoDinamicoControllerImp controller;
@@ -45,7 +45,7 @@ public class CalculoDinamicoControllerImplTest {
     void calcular_OK() throws Exception {
         CalculoDinamicoResponse mockResponse = new CalculoDinamicoResponse();
         mockResponse.setResultado(150.0);
-        when(calculosService.CalculoDinamico(any(), anyString())).thenReturn(mockResponse);
+        when(calculosService.calculoDinamico(any(), anyString())).thenReturn(mockResponse);
 
         ResponseEntity<CalculoDinamicoResponse> response = controller.calcular(100.0, 50.0);
 
@@ -56,7 +56,7 @@ public class CalculoDinamicoControllerImplTest {
     @Test
     @DisplayName("calcular - BaseDatosException")
     void calcular_BaseDatosException() throws Exception {
-        when(calculosService.CalculoDinamico(any(), anyString()))
+        when(calculosService.calculoDinamico(any(), anyString()))
                 .thenThrow(new BaseDatosException("Error DB"));
 
         ResponseEntity<CalculoDinamicoResponse> response = controller.calcular(100.0, 50.0);
@@ -67,7 +67,7 @@ public class CalculoDinamicoControllerImplTest {
     @Test
     @DisplayName("calcular -  CalculoDinamicoException")
     void calcular_CalculoDinamicoException() throws Exception {
-        when(calculosService.CalculoDinamico(any(), anyString()))
+        when(calculosService.calculoDinamico(any(), anyString()))
                 .thenThrow(new CalculoDinamicoException("Error cálculo"));
 
         ResponseEntity<CalculoDinamicoResponse> response = controller.calcular(100.0, 50.0);
@@ -77,7 +77,7 @@ public class CalculoDinamicoControllerImplTest {
 
     @Test
     @DisplayName("historial - lista de historial")
-    void historial_OK() throws Exception {
+    void historial_OK() {
         List<HistorialCalculosResponse> mockList = List.of(new HistorialCalculosResponse());
         when(calculosService.historial()).thenReturn(mockList);
 
@@ -89,7 +89,7 @@ public class CalculoDinamicoControllerImplTest {
 
     @Test
     @DisplayName("historial - SinHistorialCalculosException")
-    void historial_SinHistorialException() throws Exception {
+    void historial_SinHistorialException() {
         when(calculosService.historial()).thenThrow(new SinHistorialCalculosException("No hay datos", "HIST-404"));
         SinHistorialCalculosException thrown = assertThrows(
                 SinHistorialCalculosException.class,

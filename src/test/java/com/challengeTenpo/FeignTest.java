@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class FeignTest {
+class FeignTest {
 
     @Autowired
     private IPorcentajeService porcentajeService;
@@ -22,7 +22,7 @@ public class FeignTest {
 
     @Test
     @DisplayName("Obtener porcentaje exitoso - retorna número flotante y capas de parsear")
-    void obtenerPorcentaje_Exitoso() throws Exception {
+    void obtenerPorcentaje_Exitoso() {
         String resultado = porcentajeService.obtenerPorcentaje();
 
         assertNotNull(resultado);

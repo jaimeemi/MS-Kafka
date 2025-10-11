@@ -1,9 +1,6 @@
 package com.challengeTenpo.controller.Imp;
 
 import com.challengeTenpo.controller.ICalculoDinamicoController;
-import com.challengeTenpo.exceptions.BaseDatosException;
-import com.challengeTenpo.exceptions.CalculoDinamicoException;
-import com.challengeTenpo.exceptions.SinHistorialCalculosException;
 import com.challengeTenpo.models.Request.CalculoDinamicoRequest;
 import com.challengeTenpo.models.Response.CalculoDinamicoResponse;
 import com.challengeTenpo.models.Response.HistorialCalculosResponse;
@@ -11,7 +8,6 @@ import com.challengeTenpo.service.ICalculosService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +31,7 @@ public class CalculoDinamicoControllerImp implements ICalculoDinamicoController 
     public ResponseEntity<CalculoDinamicoResponse> calcular(double numero1, double numero2) {
         CalculoDinamicoRequest request = crearCalculoDinamicoRequest(numero1, numero2);
         log.info("Servicio de Calculo Dinamico");
-        CalculoDinamicoResponse response = calculosService.CalculoDinamico(request, peticion.getRequestURI());
+        CalculoDinamicoResponse response = calculosService.calculoDinamico(request, peticion.getRequestURI());
         return ResponseEntity.ok(response);
     }
 
