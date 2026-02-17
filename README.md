@@ -66,9 +66,6 @@ El porcentaje obtenido se almacena en memoria durante 30 minutos. Si el servicio
 Se implementan pruebas unitarias utilizando JUnit y Mockito para garantizar la funcionalidad del cálculo y el manejo del caché.
 No sea realizaron todos los test. Solo implemente algunos para que puedan reconocer el el formato de testeo mio 
 
-## Notas Finales
-Este proyecto es una entrega para un desafío técnico. No se han implementado todas las pruebas posibles, ya que el objetivo es demostrar el conocimiento sobre los temas tratados.
-
 ## Inversión de Control (IoC) y Dependencia de Inyección (DI)
 El proyecto utiliza IoC y DI para gestionar las dependencias entre los componentes. Esto permite una mayor flexibilidad y facilita las pruebas unitarias.
 
