@@ -36,7 +36,7 @@ testcontainers:
 logging:
   level:
     root: WARN
-    com.challengeTenpo: DEBUG
+    com.main: DEBUG
     org.apache.kafka: ERROR
     org.springframework.kafka: ERROR
     org.testcontainers: WARN

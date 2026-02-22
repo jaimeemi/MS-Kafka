@@ -10,11 +10,11 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.challengeTenpo</groupId>
+    <groupId>com.main</groupId>
     <artifactId>tenpo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Tabajo Practico Tenpo Microservicio-Kafka</name>
-    <description>TP con Java 17 SpringBoot, Kafka, Docker</description>
+    <name>Desarrollo De API para control de Precios con DB y Kafka</name>
+    <description>Desarrollo De API para control de Precios con DB y Kafka con Java 17 SpringBoot, Kafka, Docker</description>
 
     <properties>
         <java.version>17</java.version>

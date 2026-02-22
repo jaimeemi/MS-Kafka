@@ -17,4 +17,4 @@ logging:
     org.apache.kafka.clients: ERROR
     org.springframework.kafka: ERROR
     org.hibernate: WARN
-    com.challengeTenpo: INFO
+    com.main: INFO
