@@ -36,7 +36,7 @@ logging:
     org:
       springframework: WARN
       hibernate: WARN
-    com.challengeTenpo: INFO
+    com.main: INFO
 
 management:
   endpoints:

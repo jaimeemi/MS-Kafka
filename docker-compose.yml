@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+
   postgres:
     image: postgres:15-alpine
     container_name: MS-Kafka-postgres
@@ -51,7 +52,7 @@ services:
 
   app:
     build: .
-    container_name: MS-Kafka-ChallengeTenpo
+    container_name: MS-Kafka-main
     ports:
       - "8085:8085"
     depends_on:
